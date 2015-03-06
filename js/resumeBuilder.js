@@ -146,12 +146,12 @@ for (var i in bio.skills){
 	allFormattedHTMLskills = allFormattedHTMLskills + HTMLskills.replace("%data%", bio.skills[i]);
 }
 $("#skills").append(allFormattedHTMLskills);
+$("#skills").css("flex-direction","column") // I had to do this because the defaul layout is row , and so is showed
+
  
 $("#workExperience").append(HTMLworkStart);
 for (var job in work.jobs) {
-	var workItem =  HTMLworkEmployer.replace( "%data%" ,  work.jobs[job].employer  ) + HTMLworkTitle.replace("%data%" , work.jobs[job].title) + HTMLworkDates.replace( "%data%" , work.jobs[job].dates ) + HTMLworkLocation.replace( "%data%" , work.jobs[job].location ) + HTMLworkDescription.replace( "%data%" , work.jobs[job].description ) ;	
-	console.log(work.jobs[job]) ;
-	console.log(workItem) ;
+	var workItem =  HTMLworkEmployer.replace( "%data%" ,  work.jobs[job].employer  ) + HTMLworkTitle.replace("%data%" , work.jobs[job].title) + HTMLworkDates.replace( "%data%" , work.jobs[job].dates ) + HTMLworkLocation.replace( "%data%" , work.jobs[job].location ) + HTMLworkDescription.replace( "%data%" , work.jobs[job].description ) ;		
  	$(".work-entry:last").append(workItem); 	
 } ;
 
