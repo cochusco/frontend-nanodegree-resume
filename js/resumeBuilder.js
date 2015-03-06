@@ -66,7 +66,7 @@ var work = {
 	"jobs" : [
 		{
 			"employer": "Planet Express" ,
-     		"title": "lobby boy"  ,
+     		"title": "Pizza boy"  ,
     	    "location": "roma" , 
     		"dates": "2000-2002" ,
      		"description": "Who moved my cheese cheesecake stinking bishop. Dolcelatte danish fontina dolcelatte camembert de normandie airedale goat pecorino brie. Mozzarella cauliflower cheese chalk and cheese cheddar smelly cheese say cheese who moved my cheese blue castello. Cheddar smelly cheese cheese triangles brie pecorino jarlsberg stinking bishop cheese and biscuits. Danish fontina blue castello bavarian bergkase blue castello." 
@@ -122,8 +122,19 @@ var contactArr =[formattedMobile , formattedEmail ,formattedTwitter , formattedG
 var formattedBioPic = HTMLbioPic.replace("%data%", bio.bioPic);
 var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
-var HTMLskillsStart = '<h3 id="skillsH3">Skills at a Glance:</h3><ul id="skills" class="flex-box"></ul>';
-var HTMLskills = '<li class="flex-item"><span class="white-text">%data%</span></li>';
+
+var HTMLworkStart = '<div class="work-entry"></div>';
+var HTMLworkEmployer = '<a href="#">%data%';
+var HTMLworkTitle = ' - %data%</a>';
+var HTMLworkDates = '<div class="date-text">%data%</div>';
+var HTMLworkLocation = '<div class="location-text">%data%</div>';
+var HTMLworkDescription = '<p><br>%data%</p>';
+
+var HTMLprojectStart = '<div class="project-entry"></div>';
+var HTMLprojectTitle = '<a href="#">%data%</a>';
+var HTMLprojectDates = '<div class="date-text">%data%</div>';
+var HTMLprojectDescription = '<p><br>%data%</p>';
+var HTMLprojectImage = '<img src="%data%">';
 
 
 
@@ -135,9 +146,12 @@ for (var i in bio.skills){
 	allFormattedHTMLskills = allFormattedHTMLskills + HTMLskills.replace("%data%", bio.skills[i]);
 }
 $("#skills").append(allFormattedHTMLskills);
+ 
+$("#workExperience").append(HTMLworkStart);
+for (var job in work.jobs) {
+	var workItem =  HTMLworkEmployer.replace( "%data%" ,  work.jobs[job].employer  ) + HTMLworkTitle.replace("%data%" , work.jobs[job].title) + HTMLworkDates.replace( "%data%" , work.jobs[job].dates ) + HTMLworkLocation.replace( "%data%" , work.jobs[job].location ) + HTMLworkDescription.replace( "%data%" , work.jobs[job].description ) ;	
+	console.log(work.jobs[job]) ;
+	console.log(workItem) ;
+ 	$(".work-entry:last").append(workItem); 	
+} ;
 
-
-
-
-
-	
