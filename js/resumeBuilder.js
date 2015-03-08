@@ -67,7 +67,7 @@ var work = {
 		{
 			"employer": "Planet Express" ,
      		"title": "Pizza boy"  ,
-    	    "location": "roma" , 
+    	    "location": "rome" , 
     		"dates": "2000-2002" ,
      		"description": "Who moved my cheese cheesecake stinking bishop. Dolcelatte danish fontina dolcelatte camembert de normandie airedale goat pecorino brie. Mozzarella cauliflower cheese chalk and cheese cheddar smelly cheese say cheese who moved my cheese blue castello. Cheddar smelly cheese cheese triangles brie pecorino jarlsberg stinking bishop cheese and biscuits. Danish fontina blue castello bavarian bergkase blue castello." 
 		},
@@ -98,6 +98,7 @@ var projects = [
 
 	}
 ];
+
 
 
 
@@ -142,6 +143,8 @@ var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
 
 $("#topContacts").append(contactArr);
+$("#footerContacts").append(contactArr);
+
 $("#header").append([formattedBioPic,formattedWelcomeMsg]);
 if(bio.skills.length > 0){
 	$("#header").append(HTMLskillsStart);
@@ -170,17 +173,60 @@ function displayWork(){
 	} ;
 }
 
-displayWork();
+work.display = displayWork;
+work.display() ;
 
 
-$("#projects").append(HTMLprojectStart);
-for (var project in projects) {
-	var projectItem =  HTMLprojectTitle.replace( "%data%" ,  projects[project].title  ) + HTMLprojectDates.replace("%data%" , projects[project].dates) + HTMLprojectDescription.replace( "%data%" , projects[project].description )    ;		
-	for (var image in projects[project].images){			
-			projectItem =  projectItem + HTMLprojectImage.replace( "%data%" , projects[project].images[image]) ;
-	}
- 	$(".project-entry:last").append(projectItem); 	
-} ;
+
+projects.display = function(){	
+		for (var project in projects) {
+			if(typeof(projects[project]) != "object") continue ; //do not insert project in case of a function element (ie, this function)
+			console.log("display" + project);
+			$("#projects").append(HTMLprojectStart);
+			var projectItem =  HTMLprojectTitle.replace( "%data%" ,  projects[project].title  ) + HTMLprojectDates.replace("%data%" , projects[project].dates) + HTMLprojectDescription.replace( "%data%" , projects[project].description )    ;		
+			for (var image in projects[project].images){			
+					projectItem =  projectItem + HTMLprojectImage.replace( "%data%" , projects[project].images[image]) ;
+			}
+		 	$(".project-entry:last").append(projectItem); 	
+	} ;
+};
+
+projects.display() ;
+
+
+education.display = function(){			
+		for(var school in education.schools){
+			$("#education").append(HTMLschoolStart);
+			var educationEntry = HTMLschoolName.replace("#", education.schools[school].url).replace("%data%", education.schools[school].name) + HTMLschoolDegree.replace("%data%", education.schools[school].degree) + HTMLschoolDates.replace("%data%", education.schools[school].dates) + HTMLschoolLocation.replace("%data%", education.schools[school].location) ;
+			for(var major in education.schools[school].majors){
+				educationEntry += HTMLschoolMajor.replace("%data%", education.schools[school].majors[major]) ;
+			}					 
+ 			$(".education-entry:last").append(educationEntry) ;
+		} ;
+
+		$("#education").append("<h3>Online Classes</h3>");
+
+		for(var onlineCourse in education.onlineCourses){		
+			$("#education").append(HTMLschoolStart);	
+			var educationOnlineEntry = HTMLonlineTitle.replace("%data%", education.onlineCourses[onlineCourse].title) + HTMLonlineSchool.replace("%data%", education.onlineCourses[onlineCourse].school) 
+										+ HTMLonlineDates.replace("%data%", education.onlineCourses[onlineCourse].date) + HTMLonlineURL.replace("#", education.onlineCourses[onlineCourse].url) .replace("%data%", education.onlineCourses[onlineCourse].url)  ;
+			/// HTMLonlineTitle.replace("#", education.onlineCourses[onlineCourse].url).replace("%data%", education.schools[school].name) + HTMLschoolDegree.replace("%data%", education.schools[school].degree) + HTMLschoolDates.replace("%data%", education.schools[school].dates) + HTMLschoolLocation.replace("%data%", education.schools[school].location) ;
+								 
+ 			$(".education-entry:last").append(educationOnlineEntry);
+
+		} ;
+
+
+		
+};
+
+education.display() ;
+
+
+
+// TODO look at the # hrefs to substitute
+
+
 
 
 
@@ -190,53 +236,6 @@ function locationizer(workObjt){
 		locations.push(workObjt.jobs[job].location);
 	}
 	return locations ;
-}
-/*
+};
 
-var work = {
-	"jobs" : [
-		{
-			"employer": "Planet Express" ,
-     		"title": "Pizza boy"  ,
-    	    "location": "roma" , 
-    		"dates": "2000-2002" ,
-     		"description": "Who moved my cheese cheesecake stinking bishop. Dolcelatte danish fontina dolcelatte camembert de normandie airedale goat pecorino brie. Mozzarella cauliflower cheese chalk and cheese cheddar smelly cheese say cheese who moved my cheese blue castello. Cheddar smelly cheese cheese triangles brie pecorino jarlsberg stinking bishop cheese and biscuits. Danish fontina blue castello bavarian bergkase blue castello." 
-		},
-		{
-			"employer": "Pollos Hermanos"  ,
-     		"title": "Delivery manager"  ,
-    	    "location": "New Mexico" , 
-    		"dates": "2002-2004" ,
-     		"description": "Everyone loves feta. Say cheese cream cheese rubber cheese fromage boursin chalk and cheese airedale mascarpone. Hard cheese roquefort pepper jack emmental red leicester queso paneer mozzarella. Bavarian bergkase airedale stinking bishop who moved my cheese."
-		},
-	],
-	"display" : null
-
-} ;
-
-
-
-
-var HTMLprojectStart = '<div class="project-entry"></div>';
-var HTMLprojectTitle = '<a href="#">%data%</a>';
-var HTMLprojectDates = '<div class="date-text">%data%</div>';
-var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
-
-var projects = [
-	{
-		"title": "The internet box" ,
-		"dates": "2000" ,
-		"description": "Queso babybel camembert de normandie danish fontina halloumi. Brie cheese and biscuits say cheese. Blue castello chalk and cheese stinking bishop camembert de normandie bavarian bergkase goat feta cheese triangles. Cut the cheese melted cheese cheesy grin cheese on toast squirty cheese hard cheese macaroni cheese gouda. Melted cheese cheese and biscuits lancashire taleggio the big cheese." ,
-	    "images": ["http://d4c027c89b30561298bd-484902fe60e1615dc83faa972a248000.r12.cf3.rackcdn.com/imagepicker/21974/internet-box-it-crowd_1.jpg" , "http://www.kissmybit.com/wp-content/uploads/2012/03/The-IT-Crowd-the-it-crowd-20584011-760-505.jpg"] 
-	},
-	{
-		"title": "Sample ployect " ,
-		"dates": "2000-2005" ,
-		"description": "Rubber cheese airedale halloumi. Fromage boursin roquefort the big cheese paneer parmesan the big cheese ricotta. Cottage cheese taleggio airedale cheese slices cheeseburger squirty cheese bocconcini lancashire. Ricotta babybel who moved my cheese cheesy feet croque monsieur." ,
-	    "images": ["http://prancercise.com/wp-content/uploads/2013/07/book-larger.jpg"] 
-
-	}
-];
-
-*/
+$("#mapDiv").append(googleMap);
