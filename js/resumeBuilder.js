@@ -59,7 +59,7 @@ var work = {
      		"description": "Who moved my cheese cheesecake stinking bishop. Dolcelatte danish fontina dolcelatte camembert de normandie airedale goat pecorino brie. Mozzarella cauliflower cheese chalk and cheese cheddar smelly cheese say cheese who moved my cheese blue castello. Cheddar smelly cheese cheese triangles brie pecorino jarlsberg stinking bishop cheese and biscuits. Danish fontina blue castello bavarian bergkase blue castello." 
 		},
 		{
-			"employer": "Pollos Hermanos"  ,
+			"employer": "Los Pollos Hermanos"  ,
      		"title": "Delivery manager"  ,
     	    "location": "New Mexico" , 
     		"dates": "2002-2004" ,
@@ -90,14 +90,6 @@ var projects = {
 }  ;
 
 
-
-// TODO look at the # hrefs to substitute
-// capitalice firt letter of the name an all surname
-
-
-
-
-
 bio.display = function(){
 	$("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
 	$("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
@@ -119,7 +111,6 @@ bio.display = function(){
 } ;
 
 
-
 function displayWork(){
 	$("#workExperience").append(HTMLworkStart);
 	for (var job in work.jobs) {
@@ -127,10 +118,6 @@ function displayWork(){
 	 	$(".work-entry:last").append(workItem); 	
 	} ;
 } ;
-
-
-
-
 
 projects.display = function(){	
 		for (var project in projects.projects) {
@@ -144,8 +131,6 @@ projects.display = function(){
 		 	$(".project-entry:last").append(projectItem); 	
 	} ;
 };
-
-
 
 education.display = function(){			
 		for(var school in education.schools){
@@ -168,7 +153,6 @@ education.display = function(){
 		} ;		
 };
 
-
 function locationizer(workObjt){
 	var locations = [];
 	for(var job in workObjt.jobs){
@@ -177,6 +161,7 @@ function locationizer(workObjt){
 	return locations ;
 };
 
+// capitalice first letter of the name an all surname
 function inName(){
 	var name = bio.name ;
 	console.log("inNme"  +  name);
@@ -190,7 +175,6 @@ function inName(){
 	}
 	return nameCpy.join(" ") ;
 } ;
-
 
 
 bio.display();
